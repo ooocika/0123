@@ -1,0 +1,774 @@
+public class CreateMessagePage
+  extends AbstractPage{
+
+    private WebElement summary;
+    pivate WebElement text;
+
+    @FindBy(css = "input[type=submit]")
+    private WebElement submit;
+
+    public CreateMessagePage(WebDriver driver){
+      super(driver);
+    }
+
+    public <T> createMessage(Class<T> resultPage, String summary, String details){
+      this.summary.sendKeys(summary);
+      this.text.sendKeys(details);
+      this.submit.click();
+      return PageFactory.initElements(driver, resultPage);
+    }
+    public static CreateMessagePage to(WebDriver driver){
+      driver.get("http://localhost:9990/mail/messages/form");
+    return PageFactory.initElements(driver, CreateMessagePage.class);
+    }
+    
+  }
+//
+assertThat(viewMessagePage.getMessage()).isEqualTo(expectedMessage);
+assertThat(viewMessagePage.getSuccess()).isEqualTo("Successfully created a new 
+                                                  message");
+//
+public Message getMessage() throws ParseException{
+  Message message = new Message();
+  message.setId(getId());
+message.setCreated(getCreated());
+message.setSummary(getSummary());
+message.setText(getText());
+return message;
+}
+//
+@AfterEach
+  void destory(){
+  if(driver != null){
+    driver.close();
+  }
+  }
+//
+@WebDriver driver;
+
+@BeforeEach
+  void setup(WebApplicationContext context){
+  driver = MockMvcHtmlUnitDriverBuilder
+  .webAppContextSetup(context)
+  .build();
+  }
+//
+@WebDriver driver;
+
+@BeforeEach
+  void setup(){
+  driver = MockMvcHtmlUnitDriverBuilder
+
+    .webAppContextSetup(context, springSecurity())
+
+    .contextPath("")
+    
+    .useMockMvcForHosts("example.com", "example.org")
+    .build();
+    }
+//
+MockMvc mockMvc = MockMvcBuilders
+  .webAppContextSetup(context)
+  .apply(springSecurity())
+  .build();
+
+driver =MoockMvcHtmlUnitDriverBuilder
+  .mockMvcSetup(mockMvc)
+
+  .contextPath("")
+
+  .useMockMvcForHosts("example.com", "example.org")
+  .build();
+//
+def setup(){
+  browser.driver = MockMvcHtmlUnitDriverBuilder
+    .webAppContextSetup(context)
+    .build();
+}
+//
+form.summary = expectedSummary
+  form.text = expectedMessage
+  submit.click(ViewMessagePage)
+  //
+  class CreateMessagePage extends Page{
+
+  static url = 'messages/form'
+  static at = {assert title == 'Messages : Create' ; true}
+  static content = {
+  submit {$('input[type=submit]')}
+  form{$('form')}
+  errors(required:false) {$('label.errors, .alert-error')?.text()}
+  }
+}
+//
+
+RestTemplate restTemplate = new RestTemplate();
+
+MockRestServiceServer mockServer = MockRestServiceServer.bindTo(restTemplate).build();
+mockServer.expect(requestTo("/greeting")).andRespond(withSuccess());
+
+mockServer.verify();
+
+//
+
+server = MockRestServiceServer.bindTo(restTemplate).ignoreExpectOrder(true).build();
+
+//
+RestTemplate restTemplate = new RestTemplate();
+
+MockRestServiceServer mockServer = MockRestServiceServer.bindTo(restTemplate).build();
+mockServer.expect(times(2), requestTo("/something")).andRespond(withSuccess());
+mockServer.expect(times(3), requestTo("/somewhere")).andRespond(withSuccess());
+
+mockServer.verify();
+//
+MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+this.restTemplate = new RestTemplate(new MockMvcClientHttpRequestFactory(mockMvc));
+
+//Chapter 4. Data Access
+public interface PlatformTransactionManager extends TransactionManager{
+
+  TransactionStatus getTransaction(TransactionDefinition definition)throws
+  TransactionException;
+
+  void commit(TransactionStatus status)throws TransactionException;
+
+  void rollback(TransactionStatus status)throws TransactionException;
+  
+}
+//
+public interface ReactiveTransactionManager extends TransactionManager{
+
+  Mono<ReactiveTransaction> getReactiveTransaction(TransactionDefinition definition);
+  throws TransactionException;
+
+  Mono<void> commit(ReactiveTransaction status)throws TransactionException;
+
+  Mono<void> rollback(ReactiveTransaction status)throws TransactionException;
+}
+//
+public interface TransactionStatus extends TransactionExecution, SavepointManager,
+  Flushable{
+
+  @Override
+  boolean isNewTransaction();
+
+  boolean hasSavepoint();
+
+  @Override
+  void setRollbackOnly();
+
+  @Override
+  boolean isRollbackOnly();
+
+  void flush();
+
+  @Override
+  boolean isCompleted();
+  }
+//
+Connection conn = DataSourceUtils.getConnection(dataSource);
+//
+public interface FooService{
+
+  Foo getFoo(String fooName);
+
+  Foo getFoo(String fooName, String barName);
+
+  void insertFoo(Foo foo);
+
+  void updateFoo(Foo foo);
+
+}
+//
+public class DefaultFooService implements FooService{
+
+  @Override
+  public Foo getFoo(String fooName){
+    
+  }
+
+  @Override
+  publci Foo getFoo(String fooName, String barName){
+    
+  }
+
+  @Override
+  public void insertFoo(Foo foo){
+    
+  }
+
+  @Override
+  public void updateFoo(Foo foo){
+    
+  }
+}
+//
+public final class Boot{
+
+  public static void main(final String[] args)throws Exception{
+    ApplcationContext ctx = new ClassPathXmlApplicationContext("context.xml");
+    FooService fooService = ctx.getBean(FooService.class);
+    fooService.insertFoo(new Foo());
+  }
+}
+//
+public inferface FooService{
+
+  Flux<Foo> getFoo(String fooName);
+
+  Publisher<Foo> getFoo(String fooName, String barName);
+
+  Mono<void>insertFoo(Foo foo);
+
+  Mono<void> updateFoo(Foo foo);
+}
+//
+public class DefaultFooService implements FooService{
+
+  @Override
+  public Flux<Foo> getFoo(String fooName){
+    
+  }
+
+  @Override
+  public Publisher<Foo> getFoo(String fooName, String barName){
+    
+  }
+
+  @Override
+  public Mono<void> insertFoo(Foo foo){
+    
+  }
+
+  @Override
+  public Mono<void> updateFoo(Foo foo){
+    
+  }
+}
+//
+public void resolvePosition(){
+  try{
+    
+  }catch(NoProductInStockException ex){
+    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+  }
+}
+//
+@Transcational
+  public class DefaultFooService implements FooService{
+
+    @Override
+    public Foo getFoo(String fooName){
+      
+    }
+
+    @Override
+    public Foo getFoo(String fooName, String barName){
+      
+    }
+
+    @Override
+    public void insertFoo(Foo foo){
+      
+    }
+
+    @Override
+    public void updateFoo(Foo foo){
+      
+    }
+  }
+//
+@Transcational
+  public class DefaultFooService implements FooService{
+
+    @Override
+    public Publisher<Foo> getFoo(String fooName){
+      
+    }
+
+    @Override
+    public Mono<Foo> getFoo(String fooName, String barName){
+      
+    }
+
+    @Override
+    public Mono<Void> insertFoo(Foo foo){
+      
+    }
+
+    @Override
+    public Mono<Void> updateFoo(Foo foo){
+      
+    }
+  }
+//
+@Transactional(realOnly = true)
+  public class DefaultFooService implements FooService{
+
+    public Foo getFoo(String fooName){
+      
+    }
+
+    @Transactional(readOnly = false, prpagation = Propagation.REQUIRES_NEW)
+    public void updateFoo(Foo foo){
+      
+    }
+  }
+//
+public class TransactionalService{
+
+  @Transactional("order")
+  public void setSomething(String name){...}
+
+  @Transactional("account")
+  public void Something(){...}
+
+  @Transactional("reactive-account")
+public Mono<Void> doSomethingReactive(){...}
+}
+//
+@Target({ElementType.METHOD, ElementType.TYPE})
+  @Retention(RetentionPolicy.RUNTIME)
+  @Transactional(transcationManager = "order", label = "causal-consistency")
+  public @interface OrderTx{
+    
+  }
+@Target({ElementType.METHOD, ElementType.TYPE})
+  @Retention(RetentionPolicy.RUNTIME)
+  @Transactional(transcationManager = "account", label = "retryable")
+  public @interface AccountTx{
+    
+  }
+//
+public class TransactionalService{
+
+  @OrderTx
+  public void setSomething(String name){...}
+}
+@AccountTx
+  public void doSomething(){
+  
+  }
+}
+//
+public class SimpleProfiler implements Ordered{
+
+  private int order;
+
+  public int getOrder(){
+    return this.order;
+  }
+
+  public void setOrder(int order){
+    this.order = order;
+  }
+
+  public Object profile(ProceedingJoinPoint call)throws Throwable{
+
+    Object returnValue;
+    StopWatch clock = new StopWatch(getClass().getName());
+    try{
+      clock.start(call.toShortString());
+      returnValue = call.proceed();
+    }finally{
+      clock.stop();
+      System.out.println(clock.prettyPrint());
+    }
+    return returnValue;
+  }
+}
+//
+DataSourceTransactionManager txManager = new
+  DataSourceTransactionManager(getDataSource());
+
+executing any transactional methods
+  AnnotationTransactionAspect.aspectOf().setTransactionManager(txManager);
+
+//
+public class SimpleService implement Service{
+
+  private final TransactionTemplate transactionTemplate;
+
+  public SimpleService(PlatformTransactionManager transactionManager){
+    this.transactionTemplate = new TransactionTemplate(transactionManager);
+  
+  }
+
+public Object someServiceMethod(){
+  return transactionTemplate.execute(new TransactionCallback(){
+
+    public Object doInTransaction(TransactionStatus status){
+      updateOperation1();
+      return resultOfUpdateOperation2();
+    }
+  });
+}
+}
+//
+
+transactionTemplate.execute(new TransactionCallbackWithoutResult()){
+
+  protected void doInTransactionWithoutResult(TransactionStatus status){
+    try{
+      updateOperation1();
+      updateOperation2();
+    }catch(SomeBusinessException ex) {
+        status.setRollbackOnly();
+      }  }
+});
+//
+public class SimpleService implement Service{
+  private final TransactionTemplate transactionTemplate;
+
+  public SimpleService(PlatformTransactionManager transactionManager){
+    this.transactionTemplate = new TransactionTemplate(transactionManager);
+
+  this.transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_UNCOMMITTED);
+  
+  this.transactionTemplate.setTimeout(30);
+}
+}
+//
+public class SimpleService implement Service{
+
+  private final TransactionalOperator transactionalOperator;
+
+  public SimpleService(ReactiveTransactionManager transactionManager){
+    this.transactionalOperatior = TransactionalOperator.create(transactionManager);
+  }
+
+public Mono<Object>someServiceMethod(){
+
+
+  return 
+    update.then(resultOfUpdateOperation2).as(transactionalOperation::transactional);
+}
+}
+//
+transactionalOperator.execute(new TransactionCallnback<>(){
+
+  public Mono<Object>doInTransaction(ReativeTransactionStatus status){
+    return updateOperation1().then(updateOperation2)
+      .doOnError(SomeBusinessException.class, e ->
+                status.setRollbackOnly());
+  }
+}
+});
+//
+public class SimpleService implement Service{
+
+  private final TransactionalOperator transactionalOperator;
+
+  public SimpleService(ReactiveTransactionManager transactionManager){
+    DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+
+  definiiton.setIsolationLevel(TransactionDefinition.ISOLATION_READ_UNCOMMITTED);
+  definition.setTimeOut(30);
+
+  this.transactionalOperator = TransactionalOperator.create(transactionManager, definition);
+  }
+}
+//
+DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+
+programmatically
+  def.setName("SomeTxName");
+def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+TransactionStatus status = txManager.getTransaction(def);
+try{
+  
+}catch(MyException ex){
+  txManager.rollback(status);
+  throw ex;
+}
+txManager.commit(status);
+//
+DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+
+programmatically
+  def.setName("SomeTxName");
+def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+Mono<ReactiveTransaction> reactiveTx = txManager.getReactiveTransaction(def);
+
+reactiveTx.flatMap(status ->{
+
+  Mono<Object> tx = ...;
+
+  return tx.then(txManager.commit(status))
+    .onErrorResume(ex - > txManager.rollback(status).then(Mono.error(ex)));
+});
+//
+@Component
+  public class MyComponent{
+
+    @TransactionalEventListener
+    public void handleOrderCreatedEvent(CreationEvent<Order> creationEvent){
+      
+    }
+  }
+//
+@Repository
+  public class SomeMovieFinder implements MovieFinder{
+    
+  }
+//
+@Repository
+  public class JpaMovieFinder implements MovieFinder{
+
+    @PersistenceContext
+    private EntityManager entityManager;
+  }
+//
+@Repository
+  public class HibernateMovieFinder implements MovieFinder{
+
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory){
+      this.sessionFactory = sessionFactory;
+      
+    }
+  }
+//
+@Repository
+  public class JdbcMovieFinder implements MovieFinder{
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void init(DataSource dataSource){
+      this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+  }
+//
+int rowCount = this.jdbcTemplate.queryForObject("select count(*) from t_actor",
+                                                Integer.class);  
+
+//
+int countOfActorsNamedJoe = this.jdbcTemplate.queryForObject(
+  "select count(*) from t_actor where first_name = ?", Integer.class, "Joe");
+
+//
+String lastName = this.jdbcTemplate.queryForObject(
+  "select last_name from t_actor where id = ?",
+  String.class, 1212L);
+//
+Actor actor = jdbcTemplate.queryForObject(
+  "select first_name, last_name from t_actor where id = ?",
+  (resultSet, rowNum) -> {
+ Actor newActor = new Actor();
+    newActor.setFirstName(resultSet.getString("first_name"));
+    newActor.setLastName(resultSet.getString("last_name"));
+    return newActor;
+  },
+  
+  1212L  );
+//
+List<Actor> actors =this.jdbcTemplate.query(
+  "select first_name, last_name from t_actor",
+  (resultSet, rowNum) ->{
+    Actor actor = new Actor();
+    actor.setFirstName(resultSet.getString("first_name"));
+    actor.setLastName(resultSet.getString("last_name"));
+    return actor;
+  });
+//
+private final RowMapper<Actor> actorRowMapper = (resultSet, rowNum) ->{
+  Actor actor = new Actor();
+  actor.setFirstName(resultSet.getString("first_name"));
+  actor.setLastName(resultSet.getString("last_name"));
+  return actor;
+  
+};
+
+public List<Actor>findAllActors(){
+  return this.jdbcTemplate.query("select first_name, last_name from t_actor", 
+                                 actorRowMapper");
+}
+//
+this.jdbcTemplate.update(
+  "insert into t_actor(first_name, last_name) values (?, ?)",
+  "Leonor","Watling");
+  //
+this.jdbcTemplate.update(
+  "update t_actor set last_name = ? where id = ?",
+  "Banjo", 5276L);
+//
+this.jdbcTemplate.update(
+  "delete from t_actor where id = ?",
+  Long.valueOf(actorId));
+//
+jdbcTemplate.update("delete from t_actor where id=?", actorId.toLong())
+  //
+  this.jdbcTemplate.execute("create table mytable(id integer, name varchar(100))");
+//
+this.jdbcTemplate.update(
+  "call SUPPORT.REFRESH_ACTORS_SUMMARY(?)",
+  Long.valueOf(unionId));
+//
+public class JdbcCorporateEventDao implements CorporateEventDao{
+
+  private JdbcTemplate jdbcTemplate;
+
+  public void setDataSource(DataSource dataSource){
+  this.jdbcTemplate = new JdbcTemplate(dataSource);
+}
+  
+}
+//
+@Repository
+  public class JdbcCorporateEventDao implements CorporateEventDao{
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void setDataSource(DataSource dataSource){
+      this.jdbcTemplate = new JdbcTemplate(dataSource);
+      
+    }
+    
+  }
+//
+private NamedParameterJdbcTemplate namedJdbcTemplate;
+
+public void setDataSource(DataSource dataSource){
+  this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+
+}
+
+public int countOfActorsByFirstName(String firstName){
+  String sql = "select count(*) from T_ACTOR where first_name = :first_name";
+
+  SqlParameterSource namedParameters = new MapSqlParameterSource("first_name",
+    firstName);
+
+  return this.namedParameterJdbcTemplate.queryForObject(sql, nameParameters,
+                                                        Integer.class);
+}
+//
+private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+public void setDataSource(DataSource dataSource){
+  this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+}
+
+public int countOfActorsByFirstName(String firstName){
+
+  String sql = "select count(*) from T_ACTOR where first_name = :first_name";
+
+  Map<String, String> namedParameters = Collections.singletonMap("first_name",
+                                                                firstName);
+
+  return this.namedParameterJdbcTemplate.queryForObject(sql, namedParameters,
+                                                        Integer.class);
+}
+//
+public class Actor{
+
+  private Long id;
+  private String firstName;
+  private String lastName;
+
+  public String getFirstName(){
+  return this.firstName;
+}
+  public String getLastName(){
+    return this.lastName;
+  }
+
+  publiv Long getId(){
+    return this.id;
+  }
+  
+}
+//
+private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+public void setDataSource(DataSource dataSource){
+  this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+}
+
+public int countOfActors(Actor exampleActor){
+
+  String sql = "select count(*) from T_ACTOR where first_name = :first_name and
+    last_name = :lastName";
+
+SqlParameterSource nameParameters = new
+  BeanPropertySqlParameterSource(exampleActor);
+
+  return this.namedParameterJdbcTemplate.queryForObject(sql, nameParameters,
+                                                        Interger.class);
+}
+//
+public class CustomSQLErrorCodesTranslator extends SQLErrorCodeSQLExceptionTransplator
+  {
+
+    protected DataAccessException customTranslate(String task, String sql,
+                                                 SQLException sqlEx){
+      if(sqlEx.getErrorCode() == -12345){
+        return new DeadlockLoserDataAccessException(task, sqlEx);
+      }
+      return null; 
+    }
+    
+                                                 }
+//743
+private JdbcTemplate jdbcTemplate;
+
+public void setDataSource(DataSource dataSource){
+
+  this.jdbcTemplate = new JdbcTemplate();
+this.jdbcTemplate.setDataSource(dataSource);
+
+CustomSQLErrorCodeTranslator tr = new CustomSQLErrorCodeTranslator();
+tr.setDataSource(dataSource);
+this.jdbcTemplate.setSqlExceptionTranslator(tr);
+}
+
+public void updateShippingCharge(long orderId, long pct){
+
+  this.jdbcTemplate.update("update orders" + 
+                          "set shipping_charge = shipping_charge + ? / 100" +
+                           "where id = ?", pct, orderId);
+}
+//
+public class ExecuteAStatement{
+
+  private JdbcTemplate jdbcTemplate;
+
+  public void setDataSource(DataSource dataSource){
+    this.jdbcTemplate = new JdbcTemplate(dataSource);
+  }
+
+  public void doExecute(){
+    this.jdbcTemplate.execute("create table mytable(id integer, 
+                              name varchar(100))");
+  }
+}
+
+///
+public class RunQuery{
+
+  private void setDataSource(DataSource dataSource){
+
+    public void setDataSource(DataSource dataSource){
+      this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+  public int getCount(){
+    return this.jdbcTemplate.queryForObject("select count(*) from mytable", 
+                                           Integer.class);
+  }
+
+  public String getName(){
+    return this.jdbcTemplate.queryForObject("select name from mytable", 
+                                           String.class);
+  }
+  }
+}
+
+//746P
